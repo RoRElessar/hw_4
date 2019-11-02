@@ -1,0 +1,19 @@
+body, html {
+  position: relative;
+  height: 100%;
+  width : 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: crimson;
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+}
