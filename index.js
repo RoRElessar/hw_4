@@ -64,32 +64,68 @@
         return newArray;
     };
 
-    Array.prototype.mySort = function () {
+    Array.prototype.mySort = function (compareFn) {
 
-        return sort(this);
+        return mergeSort(this);
 
-        function sort(array) {
-            const arrayLength = array.length;
-
-            for (let i = 0; i < arrayLength; i++) {
-                let left = array[i];
-                let right = array[i + 1];
-                if (left > right) {
-                    array[i] = right;
-                    array[i + 1] = left;
-                }
+        function mergeSort(array) {
+            if (array.length === 1) {
+                return array;
             }
-            return array;
+
+            const middle = Math.floor(array.length / 2);
+            const left = array.slice(0, middle);
+            const right = array.slice(middle);
+
+            return merge(
+                mergeSort(left),
+                mergeSort(right)
+            )
         }
 
+        function merge(left, right) {
+            let result = [];
+            let indexLeft = 0;
+            let indexRight = 0;
+
+            while (indexLeft < left.length && indexRight < right.length) {
+                let _left = left[indexLeft];
+                let _right = right[indexRight];
+
+                if (compareFn)
+                    compareFn = composeCompareFn(compareFn(left, right));
+                compareFn = (l, r) => l < r;
+
+                if (compareFn(_left, _right)) {
+                    result.push(left[indexLeft]);
+                    indexLeft++
+                } else {
+                    result.push(right[indexRight]);
+                    indexRight++
+                }
+            }
+            return result.concat(left.slice(indexLeft)).concat(right.slice(indexRight));
+        }
+
+        function composeCompareFn(compareResult) {
+            if (Math.sign(compareResult) === -1)
+                return false;
+            if (Math.sign(compareResult) === 1)
+                return true;
+            if (compareResult === 0)
+                return false;
+        }
     };
 
     const array = [11, 1, 2, 3, 4, 6, 8, 5, 10, 1000];
     const stringArray = ['apple', 'zebra', 'banana'];
+    const testArray = [22, 4, 5, 29, 40, 2, 46, 33, 48, 11, 42, 1, 12, 25, 10, 13, 21, 39, 45, 38, 8, 23, 50, 27, 20,
+        14, 26, 16, 31, 34, 3, 19, 7, 32, 41, 6, 28, 30, 44, 18, 24, 47, 43, 49, 15, 35, 36, 9, 37, 17];
     console.log(array.myForEach((el) => console.log(el * 2)));
     console.log(array.myMap((el) => el * 2 ));
     console.log(array.mySort());
     console.log(stringArray.mySort());
+    console.log(testArray.mySort());
 
     // Circle
     const circle = document.getElementById('circle');
