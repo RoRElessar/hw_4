@@ -1,7 +1,7 @@
 body, html {
   position: relative;
   height: 100%;
-  width : 100%;
+  width: 100%;
   margin: 0;
   overflow: hidden;
 }
@@ -10,6 +10,8 @@ body, html {
   position: absolute;
   width: 60px;
   height: 60px;
+  left: 0;
+  top: 0;
   border-radius: 50%;
   background-color: crimson;
   -webkit-transition: .25s ease-in-out;
